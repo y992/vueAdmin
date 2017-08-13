@@ -5,8 +5,22 @@
                 <template v-if="item.subs">
                     <el-submenu :index="item.index">
                         <template slot="title"><i :class="item.icon"></i>{{ item.title }}</template>
-                        <el-menu-item v-for="(subItem,i) in item.subs" :key="i" :index="subItem.index">{{ subItem.title }}
-                        </el-menu-item>
+
+                        <template v-for="subItem in item.subs">
+                            <template v-if="subItem.third_subs">
+                                <el-submenu :index="subItem.index">
+                                    <span slot="title">{{ subItem.title }}</span>
+                                    <el-menu-item v-for="(thirdItem, j) in subItem.third_subs" :key="j" :index="thirdItem.index">{{ thirdItem.title}}
+
+                                    </el-menu-item>
+                                </el-submenu>
+                            </template>
+                            <template v-else>
+                                <el-menu-item :index="subItem.index">
+                                    <i :class="subItem.icon"/>{{ subItem.title}}
+                                </el-menu-item >
+                            </template>
+                        </template>
                     </el-submenu>
                 </template>
                 <template v-else>
@@ -54,16 +68,20 @@
                         subs: [
                             {
                                 index: '',
-                                title: '1.中介及商户资料管理',
+                                title: '1.中介资料管理',
+                               third_subs:[
+                                {
+                                    index: 'AddAgent',
+                                    title: '1.1.1新增中介管理',
+                                },
+                                {
+                                    index: 'AgentMes',
+                                    title: '1.1.2中介资料管理',
+                                }
+
+                               ]
                             },
-                            {
-                                index: 'AddAgent',
-                                title: '1.1.1新增中介管理',
-                            },
-                            {
-                                index: 'AgentMes',
-                                title: '1.1.2中介资料管理',
-                            },
+
 
                             {
                                 index: 'AddMerchant',
